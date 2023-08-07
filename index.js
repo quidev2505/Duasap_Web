@@ -37,7 +37,7 @@ app.use('/api/order', routerOrder);
 //Static file
 app.use(express.static(path.join(__dirname, '../frontend/build')))
 
-app.get('*', function(req, re){
+app.get('*', function(req, res){
     res.sendFile(path.join(__dirname, "../frontend/build/index.html"))
 })
 
