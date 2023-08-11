@@ -18,67 +18,67 @@ const getOrder = async (req, res) => {
 const createOrder = async (req, res) => {
     const data_from_user = req.body;
     //Nodemailer - Send email !
-    // const transporter = nodemailer.createTransport({
-    //     service: "gmail",
-    //     auth: {
-    //         user: "quidev2505@gmail.com",
-    //         pass: "wubpezwnttmiwmga"
-    //     }
-    // });
+     const transporter = nodemailer.createTransport({
+         service: "gmail",
+         auth: {
+             user: "quidev2505@gmail.com",
+             pass: "wubpezwnttmiwmga"
+         }
+     });
 
-    // var messHTML = `
-    //     <table style="width:100%;border:1px solid black;">
-    //         <tr>
-    //             <td style="border:1px solid black;">Họ và tên</td>
-    //             <td style="border:1px solid black;">${data_from_user.hovaten}</td>
-    //         </tr>
-    //         <tr>
-    //             <td style="border:1px solid black;">Số điện thoại</td>
-    //             <td style="border:1px solid black;">${data_from_user.sdt}</td>
-    //         </tr>
-    //         <tr>
-    //             <td style="border:1px solid black;">Địa chỉ</td>
-    //             <td style="border:1px solid black;">${data_from_user.address}</td>
-    //         </tr>
-    //         <tr>
-    //             <td style="border:1px solid black;">Ghi chú</td>
-    //             <td style="border:1px solid black;">${data_from_user.note}</td>
-    //         </tr>
-    //         <tr>
-    //             <td style="border:1px solid black;">Hình thức nhận đơn</td>
-    //             <td style="border:1px solid black;">${data_from_user.methodReceive}</td>
-    //         </tr>
-    //         <tr>
-    //             <td style="border:1px solid black;">Phương thức thanh toán</td>
-    //             <td style="border:1px solid black;">${data_from_user.methodPayment}</td>
-    //         </tr>
-    //         <tr>
-    //             <td style="border:1px solid black;">Tổng đơn hàng</td>
-    //             <td style="border:1px solid black;">${data_from_user.total_cart} vnđ</td>
-    //         </tr>
-    //     </table>
-    // `
+     var messHTML = `
+         <table style="width:100%;border:1px solid black;">
+             <tr>
+                 <td style="border:1px solid black;">Họ và tên</td>
+                 <td style="border:1px solid black;">${data_from_user.hovaten}</td>
+            </tr>
+           <tr>
+               <td style="border:1px solid black;">Số điện thoại</td>
+               <td style="border:1px solid black;">${data_from_user.sdt}</td>
+            </tr>
+          <tr>
+               <td style="border:1px solid black;">Địa chỉ</td>
+              <td style="border:1px solid black;">${data_from_user.address}</td>
+          </tr>
+             <tr>
+               <td style="border:1px solid black;">Ghi chú</td>
+                 <td style="border:1px solid black;">${data_from_user.note}</td>
+           </tr>
+            <tr>
+                <td style="border:1px solid black;">Hình thức nhận đơn</td>
+               <td style="border:1px solid black;">${data_from_user.methodReceive}</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid black;">Phương thức thanh toán</td>
+                <td style="border:1px solid black;">${data_from_user.methodPayment}</td>
+           </tr>
+            <tr>
+                <td style="border:1px solid black;">Tổng đơn hàng</td>
+               <td style="border:1px solid black;">${data_from_user.total_cart} vnđ</td>
+            </tr>
+        </table>
+    `
 
 
-    // const mailOptions = {
-    //     from: "quidev2505@gmail.com",
-    //     to: "duasap84@gmail.com",
-    //     subject: "🎉Dừa Sáp Cách Tân [Có đơn mới]🎉",
-    //     html: messHTML
-    // }
+    const mailOptions = {
+        from: "quidev2505@gmail.com",
+         to: "duasap84@gmail.com",
+        subject: "🎉Dừa Sáp Cách Tân [Có đơn mới]🎉",
+        html: messHTML
+   }
 
 
     if (data_from_user) {
         const new_order = await Order.create(data_from_user);
         if (new_order) {
         //     //Nodemailer 
-        //     transporter.sendMail(mailOptions, function (error, info) {
-        //         if (error) {
-        //             console.log(error)
-        //         } else {
-        //             console.log("Email sent:" + info.response);
-        //         }
-        //     });
+           transporter.sendMail(mailOptions, function (error, info) {
+                 if (error) {
+                    console.log(error)
+                } else {
+                     console.log("Email sent:" + info.response);
+               }
+            });
             res.status(202).json(new_order)
         }
         else
